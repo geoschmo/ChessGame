@@ -1,11 +1,85 @@
-﻿@page
+@page
 @model IndexModel
 @{
     ViewData["Title"] = "Chess";
+    Layout = null;
 }
 
-<div class="text-center">
-    <h1 class="display-4">Chess</h1>
-    <p>Two-player chess with invite links, SignalR multiplayer, and persistent game recovery.</p>
-    <p>This scaffold is ready for the chess board UI and rules engine implementation.</p>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chess</title>
+    <link rel="stylesheet" href="@Url.Content("~/css/site.css")" asp-append-version="true" />
+</head>
+<body>
+    <main class="game-shell">
+        <header class="game-header">
+            <a class="back-link" href="/">Back to main site</a>
+            <div>
+                <h1>Chess</h1>
+                <p>Two-player chess with invite links, reconnect support, and server-side rules.</p>
+            </div>
+        </header>
+
+        <section class="game-layout" aria-label="Chess game">
+            <div class="board-wrap">
+                <div class="board-frame" aria-label="Chess board">
+                    <div class="file-labels file-labels-top" aria-hidden="true">
+                        <span>a</span><span>b</span><span>c</span><span>d</span><span>e</span><span>f</span><span>g</span><span>h</span>
+                    </div>
+                    <div class="rank-labels rank-labels-left" aria-hidden="true">
+                        <span>8</span><span>7</span><span>6</span><span>5</span><span>4</span><span>3</span><span>2</span><span>1</span>
+                    </div>
+                    <div id="chessBoard" class="chess-board" role="grid" aria-label="Current chess position"></div>
+                    <div class="rank-labels rank-labels-right" aria-hidden="true">
+                        <span>8</span><span>7</span><span>6</span><span>5</span><span>4</span><span>3</span><span>2</span><span>1</span>
+                    </div>
+                    <div class="file-labels file-labels-bottom" aria-hidden="true">
+                        <span>a</span><span>b</span><span>c</span><span>d</span><span>e</span><span>f</span><span>g</span><span>h</span>
+                    </div>
+                </div>
+            </div>
+
+            <aside class="game-panel" aria-label="Game information">
+                <div class="panel-section">
+                    <span class="eyebrow">Room</span>
+                    <div class="room-code" id="roomCode">Not connected</div>
+                    <div class="action-row">
+                        <button type="button" class="primary-action" disabled>Create room</button>
+                        <button type="button" class="secondary-action" disabled>Join</button>
+                    </div>
+                </div>
+
+                <div class="panel-section">
+                    <span class="eyebrow">Position</span>
+                    <dl class="state-list">
+                        <div>
+                            <dt>Turn</dt>
+                            <dd id="turnLabel">White</dd>
+                        </div>
+                        <div>
+                            <dt>Status</dt>
+                            <dd id="statusLabel">Waiting for opponent</dd>
+                        </div>
+                        <div>
+                            <dt>You</dt>
+                            <dd id="colorLabel">Spectator</dd>
+                        </div>
+                    </dl>
+                </div>
+
+                <div class="panel-section">
+                    <span class="eyebrow">Move History</span>
+                    <ol id="moveHistory" class="move-history">
+                        <li>No moves yet</li>
+                    </ol>
+                </div>
+            </aside>
+        </section>
+    </main>
+
+    <script src="@Url.Content("~/js/site.js")" asp-append-version="true"></script>
+</body>
+</html>
